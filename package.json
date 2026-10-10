@@ -1,0 +1,17 @@
+{
+  "name": "retro-profile",
+  "version": "1.0.0",
+  "description": "Trevor Mbugua — Retro Gaming Profile",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "serve": "node server.js",
+    "serve:watch": "nodemon --watch server.js --watch index.html --watch styles.css --watch script.js --ext html,css,js --exec \"npm run serve\" --inspect"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

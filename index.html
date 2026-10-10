@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="retro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trevor Mbugua — Retro Gaming Page</title>
+  <meta name="description" content="Portfolio of Trevor Mbugua, a designer and developer crafting thoughtful digital experiences — served with extra pixels." />
+  <meta name="theme-color" content="#0a0a18" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="crt" aria-hidden="true"></div>
+
+  <!-- ======================= ICON SPRITE ======================= -->
+  <svg class="sprite" aria-hidden="true" focusable="false" width="0" height="0">
+    <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M3 11 12 4l9 7" /><path d="M5 10v10h14V10" /><path d="M10 20v-5h4v5" />
+    </symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M12 4a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z" /><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" />
+    </symbol>
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M9 4a3.4 3.4 0 1 1 0 6.8A3.4 3.4 0 0 1 9 4Z" /><path d="M2.5 20c0-3.4 2.9-5.4 6.5-5.4s6.5 2 6.5 5.4" /><path d="M17 6.6a3 3 0 1 1 0 6" /><path d="M16.5 14.8c3 0 5 1.9 5 5.2" />
+    </symbol>
+    <symbol id="i-gamepad" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M7 8h10a5 5 0 0 1 5 5v3a3 3 0 0 1-5.6 1.5L15 16H9l-1.4 1.5A3 3 0 0 1 2 16v-3a5 5 0 0 1 5-5Z" /><path d="M7 11v4M5 13h4" /><path d="M16 12h1M18 14h1" />
+    </symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M12 8.6A3.4 3.4 0 1 1 12 15.4 3.4 3.4 0 0 1 12 8.6Z" /><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4" />
+    </symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12Z" /><path d="M12 7.4A2.6 2.6 0 1 1 12 12.6 2.6 2.6 0 0 1 12 7.4Z" />
+    </symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M3 5h18v14H3z" /><path d="m3 6 9 7 9-7" />
+    </symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14Z" /><path d="m16.4 16.4 4.6 4.6" />
+    </symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18Z" /><path d="M12 7v5.2l3.6 2.1" />
+    </symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M12 20S3.5 14.6 3.5 8.9A4.4 4.4 0 0 1 12 6.8a4.4 4.4 0 0 1 8.5 2.1C20.5 14.6 12 20 12 20Z" />
+    </symbol>
+    <symbol id="i-terminal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M3 4h18v16H3z" /><path d="m7 9 3 3-3 3" /><path d="M13 15h4" />
+    </symbol>
+    <symbol id="i-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h5" /><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+    </symbol>
+    <symbol id="i-crosshair" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M12 3v5M12 16v5M3 12h5M16 12h5" /><path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Z" />
+    </symbol>
+    <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="m12 3 2.7 5.7 6.3.8-4.6 4.4 1.2 6.1L12 17l-5.6 3 1.2-6.1L3 9.5l6.3-.8Z" />
+    </symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M2 9c2-2 4-2 6 0s4 2 6 0 4-2 6 0" /><path d="M2 15c2-2 4-2 6 0s4 2 6 0 4-2 6 0" />
+    </symbol>
+    <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M9 6 3 12l6 6" /><path d="m15 6 6 6-6 6" />
+    </symbol>
+    <symbol id="i-tv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M3 7h18v13H3z" /><path d="m8 3 4 4 4-4" /><path d="m11 11 4 2.5-4 2.5z" />
+    </symbol>
+    <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M4 7h16M4 12h16M4 17h10" />
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="m4 12 5 5L20 6" />
+    </symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </symbol>
+    <symbol id="i-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M12 3l7 4v5.2C19 16.6 16 19.6 12 21c-4-1.4-7-4.4-7-8.8V7Z" /><path d="m9 12 2 2 4-4" />
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M4 12h14" /><path d="m13 7 5 5-5 5" />
+    </symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter">
+      <path d="M13 2 4 14h6l-1 8 9-12h-6z" />
+    </symbol>
+
+  </svg>
+
+  <!-- ======================= SIDEBAR ======================= -->
+  <aside class="sidebar" id="sidebar" aria-label="Dashboard navigation">
+    <div class="sidebar-inner">
+      <a class="brand" href="#home">
+        <span class="brand-prompt">&gt;</span> TM<span class="caret" aria-hidden="true">_</span>
+      </a>
+
+      <nav class="side-nav" aria-label="Dashboard">
+        <p class="nav-label">// menu</p>
+        <a class="side-link" href="#home" data-nav><svg class="ic"><use href="#i-home"></use></svg><span>Home</span></a>
+        <a class="side-link" href="#profile" data-nav><svg class="ic"><use href="#i-user"></use></svg><span>Trevor</span></a>
+        <a class="side-link" href="#games" data-nav><svg class="ic"><use href="#i-gamepad"></use></svg><span>Games</span></a>
+        <a class="side-link" href="#settings" data-nav><svg class="ic"><use href="#i-gear"></use></svg><span>Settings</span></a>
+      </nav>
+
+      <div class="side-block">
+        <p class="nav-label"><svg class="ic ic-sm"><use href="#i-bolt"></use></svg> theme</p>
+        <div class="theme-list" role="group" aria-label="Color theme">
+          <button type="button" class="theme-opt" data-theme-btn="retro" aria-pressed="true">
+            <span class="swatch swatch-retro" aria-hidden="true"></span>
+            <span class="theme-opt-text">
+              <span class="theme-opt-name">Retro Pixel</span>
+              <span class="theme-opt-desc">Neon purple classic</span>
+            </span>
+            <svg class="ic theme-tick" aria-hidden="true"><use href="#i-check"></use></svg>
+          </button>
+          <button type="button" class="theme-opt" data-theme-btn="cyberpunk" aria-pressed="false">
+            <span class="swatch swatch-cyberpunk" aria-hidden="true"></span>
+            <span class="theme-opt-text">
+              <span class="theme-opt-name">Cyberpunk</span>
+              <span class="theme-opt-desc">Purple · red · cyan</span>
+            </span>
+            <svg class="ic theme-tick" aria-hidden="true"><use href="#i-check"></use></svg>
+          </button>
+          <button type="button" class="theme-opt" data-theme-btn="terminal" aria-pressed="false">
+            <span class="swatch swatch-terminal" aria-hidden="true"></span>
+            <span class="theme-opt-text">
+              <span class="theme-opt-name">Terminal</span>
+              <span class="theme-opt-desc">Dark green phosphor</span>
+            </span>
+            <svg class="ic theme-tick" aria-hidden="true"><use href="#i-check"></use></svg>
+          </button>
+          <button type="button" class="theme-opt" data-theme-btn="anime" aria-pressed="false">
+            <span class="swatch swatch-anime" aria-hidden="true"></span>
+            <span class="theme-opt-text">
+              <span class="theme-opt-name">Anime Night</span>
+              <span class="theme-opt-desc">Moody violet dusk</span>
+            </span>
+            <svg class="ic theme-tick" aria-hidden="true"><use href="#i-check"></use></svg>
+          </button>
+          <button type="button" class="theme-opt" data-theme-btn="forest" aria-pressed="false">
+            <span class="swatch swatch-forest" aria-hidden="true"></span>
+            <span class="theme-opt-text">
+              <span class="theme-opt-name">Forest</span>
+              <span class="theme-opt-desc">Deep green &amp; earth</span>
+            </span>
+            <svg class="ic theme-tick" aria-hidden="true"><use href="#i-check"></use></svg>
+          </button>
+          <button type="button" class="theme-opt" data-theme-btn="warmretro" aria-pressed="false">
+            <span class="swatch swatch-warmretro" aria-hidden="true"></span>
+            <span class="theme-opt-text">
+              <span class="theme-opt-name">Warm Retro</span>
+              <span class="theme-opt-desc">Amber &amp; orange glow</span>
+            </span>
+            <svg class="ic theme-tick" aria-hidden="true"><use href="#i-check"></use></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="side-widget" aria-hidden="true">
+        <p class="widget-line">&gt; good things take time...</p>
+        <svg class="pixel-cat" viewBox="0 0 14 13" shape-rendering="crispEdges">
+          <g class="pc-body">
+            <rect x="3" y="2" width="1" height="2" /><rect x="10" y="2" width="1" height="2" />
+            <rect x="3" y="3" width="8" height="5" />
+            <rect x="2" y="6" width="10" height="5" />
+            <rect x="11" y="7" width="2" height="1" /><rect x="12" y="5" width="1" height="2" />
+            <rect x="3" y="11" width="1" height="1" /><rect x="7" y="11" width="1" height="1" />
+          </g>
+          <g class="pc-eye">
+            <rect x="4" y="5" width="1" height="1" /><rect x="9" y="5" width="1" height="1" />
+          </g>
+        </svg>
+        <div class="pixel-bars">
+          <i style="--c:#4d7dff"></i><i style="--c:#f5d76e"></i><i style="--c:#ff5f7a"></i><i style="--c:#ff8a3d"></i><i style="--c:#b06bff"></i>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <!-- ======================= SHELL ======================= -->
+  <div class="shell">
+    <header class="topbar">
+      <nav class="top-nav" aria-label="Primary">
+        <a href="#home" data-nav>Home</a>
+        <a href="#profile" data-nav>Trevor</a>
+        <a href="#games" data-nav>Games</a>
+        <a href="#settings" data-nav>Settings</a>
+      </nav>
+
+      <div class="top-right">
+        <span class="status-pill"><span class="dot dot-online" aria-hidden="true"></span>Online</span>
+        <span class="clock" id="clock" aria-label="Current local time">--:--</span>
+        <div class="quick-menu" id="quickMenu">
+          <button class="icon-btn quick-menu-toggle" id="quickMenuToggle" type="button" aria-label="Open themes and music menu" aria-expanded="false" aria-controls="quickMenuPanel">
+            <span class="quick-menu-label">MENU</span><svg class="ic quick-menu-chevron" aria-hidden="true"><use href="#i-arrow"></use></svg>
+          </button>
+          <section class="quick-menu-panel" id="quickMenuPanel" aria-label="Quick settings" hidden>
+            <div class="quick-menu-section">
+              <h2>Theme</h2>
+              <div class="quick-theme-list" role="group" aria-label="Choose color theme">
+                <button type="button" data-theme-btn="retro" aria-pressed="true">Retro Pixel</button>
+                <button type="button" data-theme-btn="cyberpunk" aria-pressed="false">Cyberpunk</button>
+                <button type="button" data-theme-btn="terminal" aria-pressed="false">Terminal</button>
+                <button type="button" data-theme-btn="anime" aria-pressed="false">Anime Night</button>
+                <button type="button" data-theme-btn="forest" aria-pressed="false">Forest</button>
+                <button type="button" data-theme-btn="warmretro" aria-pressed="false">Warm Retro</button>
+              </div>
+            </div>
+            <div class="quick-menu-section quick-music-section">
+              <h2>Music</h2>
+              <p class="quick-music-status" id="quickMusicStatus">Music is off</p>
+              <button type="button" class="music-play" id="quickMusicPlay"><span aria-hidden="true">▶</span><span id="quickMusicPlayLabel">Play music</span></button>
+              <label class="music-volume" for="quickMusicVolume"><span>Volume</span><output id="quickMusicVolumeValue">35%</output></label>
+              <input id="quickMusicVolume" type="range" min="0" max="100" value="35" aria-label="Music volume" />
+            </div>
+          </section>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="layout">
+        <div class="col-main">
+
+          <!-- ============ HOME / PROFILE HEADER ============ -->
+          <section id="home" class="panel panel-hud profile-panel reveal">
+            <div class="banner">
+              <svg class="banner-art" viewBox="0 0 640 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+                <rect class="b-sky" x="0" y="0" width="640" height="160" />
+                <g class="b-stars">
+                  <rect x="36" y="26" width="3" height="3" /><rect x="92" y="14" width="3" height="3" />
+                  <rect x="150" y="38" width="3" height="3" /><rect x="214" y="20" width="3" height="3" />
+                  <rect x="268" y="46" width="3" height="3" /><rect x="318" y="16" width="3" height="3" />
+                  <rect x="372" y="34" width="3" height="3" /><rect x="416" y="22" width="3" height="3" />
+                  <rect x="546" y="30" width="3" height="3" /><rect x="596" y="18" width="3" height="3" />
+                  <rect x="620" y="48" width="3" height="3" /><rect x="66" y="56" width="3" height="3" />
+                </g>
+                <g class="b-moon">
+                  <rect x="456" y="18" width="30" height="9" />
+                  <rect x="447" y="27" width="48" height="9" />
+                  <rect x="441" y="36" width="60" height="9" />
+                  <rect x="437" y="45" width="68" height="9" />
+                  <rect x="441" y="54" width="60" height="9" />
+                  <rect x="447" y="63" width="48" height="9" />
+                  <rect x="456" y="72" width="30" height="9" />
+                </g>
+                <g class="b-craters">
+                  <rect x="452" y="30" width="12" height="9" />
+                  <rect x="474" y="48" width="9" height="9" />
+                  <rect x="455" y="57" width="9" height="9" />
+                </g>
+                <g class="b-birds">
+                  <path d="M262 44l6 5-6 3-6-3z" /><path d="M296 30l5 4-5 3-5-3z" />
+                </g>
+                <path class="b-far" d="M0 118 L48 96 L92 112 L140 84 L188 110 L240 90 L292 114 L344 88 L396 112 L448 92 L500 114 L556 94 L604 112 L640 100 L640 160 L0 160 Z" />
+                <g class="b-near" transform="translate(505,48)">
+                  <rect x="28" y="4" width="4" height="4" />
+                  <rect x="14" y="14" width="32" height="4" />
+                  <rect x="20" y="18" width="20" height="8" />
+                  <rect x="10" y="30" width="40" height="4" />
+                  <rect x="16" y="34" width="28" height="10" />
+                  <rect x="6" y="48" width="48" height="4" />
+                  <rect x="12" y="52" width="36" height="14" />
+                  <rect x="2" y="70" width="56" height="4" />
+                  <rect x="8" y="74" width="44" height="18" />
+                </g>
+                <g class="b-near" transform="translate(60,86) scale(0.6)">
+                  <rect x="28" y="4" width="4" height="4" />
+                  <rect x="14" y="14" width="32" height="4" />
+                  <rect x="20" y="18" width="20" height="8" />
+                  <rect x="10" y="30" width="40" height="4" />
+                  <rect x="16" y="34" width="28" height="10" />
+                  <rect x="6" y="48" width="48" height="4" />
+                  <rect x="12" y="52" width="36" height="14" />
+                  <rect x="2" y="70" width="56" height="4" />
+                  <rect x="8" y="74" width="44" height="18" />
+                </g>
+                <g class="b-trees">
+                  <polygon points="180,140 196,100 212,140" />
+                  <polygon points="206,140 219,112 232,140" />
+                  <polygon points="420,140 434,106 448,140" />
+                </g>
+                <rect class="b-ground" x="0" y="140" width="640" height="20" />
+              </svg>
+              <div class="banner-scan" aria-hidden="true"></div>
+              <div class="banner-text">
+                <span class="banner-kicker">// trevor.exe</span>
+                <span class="banner-ready">PLAYER 1 <span class="blink" aria-hidden="true">_</span></span>
+              </div>
+            </div>
+
+            <div class="profile-body">
+              <div class="avatar-frame">
+                <svg class="avatar-art" viewBox="0 0 16 16" shape-rendering="crispEdges" role="img" aria-label="Pixel-art avatar of Trevor Mbugua">
+                  <rect class="a-bg" x="0" y="0" width="16" height="16" />
+                  <rect class="a-hair" x="3" y="1" width="10" height="4" />
+                  <rect class="a-gear" x="3" y="1" width="10" height="1" />
+                  <rect class="a-skin" x="4" y="5" width="8" height="6" />
+                  <rect class="a-hair" x="3" y="4" width="1" height="7" />
+                  <rect class="a-hair" x="12" y="4" width="1" height="7" />
+                  <rect class="a-hair" x="4" y="5" width="4" height="1" />
+                  <rect class="a-hair" x="9" y="5" width="3" height="1" />
+                  <rect class="a-eye" x="5" y="7" width="2" height="1" />
+                  <rect class="a-eye" x="9" y="7" width="2" height="1" />
+                  <rect class="a-mouth" x="7" y="9" width="2" height="1" />
+                  <rect class="a-gear" x="2" y="5" width="1" height="3" />
+                  <rect class="a-gear" x="13" y="5" width="1" height="3" />
+                  <rect class="a-skin" x="6" y="11" width="4" height="1" />
+                  <rect class="a-cloth" x="2" y="12" width="12" height="4" />
+                  <rect class="a-stripe" x="2" y="13" width="12" height="1" />
+                </svg>
+              </div>
+
+              <div class="profile-main">
+                <div class="profile-title">
+                  <h1 class="profile-name">
+                    Trevor Mbugua
+                    <span class="verified" title="Verified pixel badge" aria-label="Verified">
+                      <svg class="ic ic-sm"><use href="#i-badge"></use></svg>
+                    </span>
+                  </h1>
+                </div>
+
+                <p class="role-line">
+                  <span>Frontend Dev</span><i aria-hidden="true">|</i>
+                  <span>Anime Fan</span><i aria-hidden="true">|</i>
+                  <span>Linux Enjoyer</span>
+                </p>
+
+                <p class="bio" id="bioText">Just a guy trying to build cool things, play good games, and make the most out of his laptop.</p>
+
+                <div class="profile-meta">
+                  <span class="meta-item"><svg class="ic ic-sm"><use href="#i-pin"></use></svg>Kenya</span>
+                  <a class="meta-item" href="mailto:trevormbugua030@gmail.com"><svg class="ic ic-sm"><use href="#i-mail"></use></svg>trevormbugua030@gmail.com</a>
+                </div>
+
+                <ul class="tag-row" aria-label="Interests">
+                  <li class="tag"><svg class="ic ic-sm"><use href="#i-tv"></use></svg>Anime</li>
+                  <li class="tag"><svg class="ic ic-sm"><use href="#i-terminal"></use></svg>Linux</li>
+                  <li class="tag"><svg class="ic ic-sm"><use href="#i-crosshair"></use></svg>CS2</li>
+                  <li class="tag"><svg class="ic ic-sm"><use href="#i-code"></use></svg>Coding</li>
+                  <li class="tag"><svg class="ic ic-sm"><use href="#i-gamepad"></use></svg>Gaming</li>
+                  <li class="tag"><svg class="ic ic-sm"><use href="#i-bolt"></use></svg>AI Experiments</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- ============ ABOUT + FACTS ============ -->
+          <section id="profile" class="split reveal">
+            <article class="panel panel-hud">
+              <h2 class="panel-title"><svg class="ic"><use href="#i-user"></use></svg>About Me</h2>
+              <div class="prose">
+                <p>
+                  I love anime, tech, and games. I use Linux (Omarchy) for development
+                  and Windows for gaming. I'm always learning, building projects, and
+                  exploring new things.
+                </p>
+                <p>
+                  Big fan of CS2, Genshin Impact, and Wuthering Waves. Always curious
+                  about what's next in tech and gaming.
+                </p>
+              </div>
+              <p class="terminal-line"><span class="prompt">$</span> dream() → build(), play(), repeat();<span class="blink" aria-hidden="true">_</span></p>
+            </article>
+
+            <article class="panel panel-hud">
+              <h2 class="panel-title"><svg class="ic"><use href="#i-list"></use></svg>My Setup</h2>
+              <dl class="facts">
+                <div><dt>Laptop</dt><dd>HP ProBook 445 G10</dd></div>
+                <div><dt>CPU</dt><dd>Ryzen 7 7730U</dd></div>
+                <div><dt>RAM</dt><dd>16 GB</dd></div>
+                <div><dt>Storage</dt><dd>1 TB</dd></div>
+                <div><dt>OS</dt><dd>Omarchy (Linux)</dd></div>
+                <div><dt>Status</dt><dd class="fact-open">Ready to code</dd></div>
+                  <div><dt>Email</dt><dd><a href="mailto:trevormbugua030@gmail.com">trevormbugua030@gmail.com</a></dd></div>
+              </dl>
+            </article>
+          </section>
+
+          <!-- ============ INTERESTS ============ -->
+          <section id="interests" class="panel panel-hud reveal">
+            <header class="panel-head">
+              <h2 class="panel-title"><svg class="ic"><use href="#i-heart"></use></svg>My Interests</h2>
+              <span class="panel-kicker">04 loaded</span>
+            </header>
+            <div class="interest-grid">
+              <article class="interest i-anime" tabindex="0">
+                <div class="interest-thumb"><svg class="ic ic-lg"><use href="#i-tv"></use></svg></div>
+                <div class="interest-body">
+                  <h3>Anime</h3>
+                  <p>Stories, art direction and soundtracks that pull me in.</p>
+                </div>
+              </article>
+              <article class="interest i-linux" tabindex="0">
+                <div class="interest-thumb"><svg class="ic ic-lg"><use href="#i-terminal"></use></svg></div>
+                <div class="interest-body">
+                  <h3>Linux &amp; Arch</h3>
+                  <p>Arch-based systems, custom kernels, and tinkering.</p>
+                </div>
+              </article>
+              <article class="interest i-code" tabindex="0">
+                <div class="interest-thumb"><svg class="ic ic-lg"><use href="#i-code"></use></svg></div>
+                <div class="interest-body">
+                  <h3>Programming &amp; AI</h3>
+                  <p>Frontend development with HTML, CSS and JavaScript, plus experiments with algorithms and AI.</p>
+                </div>
+              </article>
+              <article class="interest i-wuwa" tabindex="0">
+                <div class="interest-thumb"><svg class="ic ic-lg"><use href="#i-crosshair"></use></svg></div>
+                <div class="interest-body">
+                  <h3>Gaming</h3>
+                  <p>Counter-Strike 2, Genshin Impact, Wuthering Waves and more.</p>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <!-- ============ GAMES / SNAKE ============ -->
+          <section id="games" class="panel panel-hud reveal">
+            <header class="panel-head">
+              <h2 class="panel-title"><svg class="ic"><use href="#i-gamepad"></use></svg>Snake</h2>
+              <div class="scoreboard">
+                <span class="score">Score <b id="scoreValue">0</b></span>
+                <span class="score score-best">Best <b id="bestValue">0</b></span>
+              </div>
+            </header>
+
+            <div class="game-stage" id="gameStage">
+              <canvas id="snakeCanvas" width="520" height="520" tabindex="0" role="img" aria-label="Snake game board. Use arrow keys or WASD to move."></canvas>
+              <div class="game-overlay" id="gameOverlay">
+                <p class="overlay-title" id="overlayTitle">SNAKE</p>
+                <p class="overlay-msg" id="overlayMsg">Arrow keys or WASD to steer. Space pauses.</p>
+                <button type="button" class="btn btn-primary" id="overlayBtn">Start Game</button>
+              </div>
+            </div>
+
+            <p class="sr-only" id="gameStatus" role="status" aria-live="polite"></p>
+
+            <div class="dpad" id="dpad" role="group" aria-label="Touch controls for Snake">
+              <button type="button" class="dpad-btn dpad-up" data-dir="up" aria-label="Move up">▲</button>
+              <button type="button" class="dpad-btn dpad-left" data-dir="left" aria-label="Move left">◀</button>
+              <button type="button" class="dpad-btn dpad-down" data-dir="down" aria-label="Move down">▼</button>
+              <button type="button" class="dpad-btn dpad-right" data-dir="right" aria-label="Move right">▶</button>
+              <button type="button" class="dpad-btn dpad-pause" data-action="pause" aria-label="Pause or resume">II</button>
+            </div>
+
+            <div class="game-actions">
+              <button type="button" class="btn btn-primary btn-sm" id="startBtn">Start</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="pauseBtn" disabled>Pause</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="restartBtn">Restart</button>
+            </div>
+
+            <p class="hint">
+              <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> or <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to steer ·
+              <kbd>Space</kbd> pauses · <kbd>Enter</kbd> starts · swipe or use the pad on mobile.
+              Best score is saved in this browser.
+            </p>
+
+            <section class="memory-game" aria-labelledby="memoryTitle">
+              <div class="memory-head">
+                <div>
+                  <h3 class="memory-title" id="memoryTitle">Memory Match</h3>
+                  <p class="memory-subtitle">Find all eight matching pairs.</p>
+                </div>
+                <div class="memory-tools">
+                  <span class="memory-moves">Moves <b id="memoryMoves">0</b></span>
+                  <button type="button" class="btn btn-ghost btn-sm" id="memoryRestart">Restart</button>
+                </div>
+              </div>
+              <div class="memory-board-wrap">
+                <div class="memory-board" id="memoryBoard" role="group" aria-label="Memory Match cards"></div>
+                <div class="memory-win" id="memoryWin" hidden role="dialog" aria-labelledby="memoryWinTitle" aria-describedby="memoryWinMessage">
+                  <canvas class="memory-fireworks" id="memoryFireworks" aria-hidden="true"></canvas>
+                  <span class="memory-win-star" aria-hidden="true">✦</span>
+                  <h4 class="memory-win-title" id="memoryWinTitle">You did it!</h4>
+                  <p class="memory-win-message" id="memoryWinMessage">All pairs matched.</p>
+                  <button type="button" class="btn btn-primary btn-sm" id="memoryPlayAgain">Play Again</button>
+                </div>
+              </div>
+              <p class="sr-only" id="memoryStatus" role="status" aria-live="polite"></p>
+            </section>
+          </section>
+
+          <!-- ============ SETTINGS ============ -->
+          <section id="settings" class="panel panel-hud reveal">
+            <header class="panel-head">
+              <h2 class="panel-title"><svg class="ic"><use href="#i-gear"></use></svg>Settings</h2>
+              <span class="panel-kicker">local only</span>
+            </header>
+
+            <div class="settings-grid">
+              <div class="setting-block">
+                <h3 class="setting-title">Theme</h3>
+                <p class="setting-desc">Switches instantly — no reload. Your pick is remembered in this browser.</p>
+                <div class="theme-cards" role="group" aria-label="Color theme">
+                  <button type="button" class="theme-card" data-theme-btn="retro" aria-pressed="true">
+                    <span class="swatch swatch-retro" aria-hidden="true"></span>
+                    <span class="theme-card-text">
+                      <span class="theme-card-name">Retro Pixel</span>
+                      <span class="theme-card-desc">Nostalgic neon-purple pixel gaming.</span>
+                    </span>
+                    <svg class="ic theme-tick" aria-hidden="true"><use href="#i-check"></use></svg>
+                  </button>
+                  <button type="button" class="theme-card" data-theme-btn="cyberpunk" aria-pressed="false">
+                    <span class="swatch swatch-cyberpunk" aria-hidden="true"></span>
+                    <span class="theme-card-text">
+                      <span class="theme-card-name">Cyberpunk</span>
+                      <span class="theme-card-desc">Neon purple, red and cyan.</span>
+                    </span>
+                    <svg class="ic theme-tick" aria-hidden="true"><use href="#i-check"></use></svg>
+                  </button>
+                  <button type="button" class="theme-card" data-theme-btn="terminal" aria-pressed="false">
+                    <span class="swatch swatch-terminal" aria-hidden="true"></span>
+                    <span class="theme-card-text">
+                      <span class="theme-card-name">Terminal</span>
+                      <span class="theme-card-desc">Dark green phosphor prompt.</span>
+                    </span>
+                    <svg class="ic theme-tick" aria-hidden="true"><use href="#i-check"></use></svg>
+                  </button>
+                  <button type="button" class="theme-card" data-theme-btn="anime" aria-pressed="false">
+                    <span class="swatch swatch-anime" aria-hidden="true"></span>
+                    <span class="theme-card-text">
+                      <span class="theme-card-name">Anime Night</span>
+                      <span class="theme-card-desc">Moody violet dusk after midnight.</span>
+                    </span>
+                    <svg class="ic theme-tick" aria-hidden="true"><use href="#i-check"></use></svg>
+                  </button>
+                  <button type="button" class="theme-card" data-theme-btn="forest" aria-pressed="false">
+                    <span class="swatch swatch-forest" aria-hidden="true"></span>
+                    <span class="theme-card-text">
+                      <span class="theme-card-name">Forest</span>
+                      <span class="theme-card-desc">Deep green and earthy tones.</span>
+                    </span>
+                    <svg class="ic theme-tick" aria-hidden="true"><use href="#i-check"></use></svg>
+                  </button>
+                  <button type="button" class="theme-card" data-theme-btn="warmretro" aria-pressed="false">
+                    <span class="swatch swatch-warmretro" aria-hidden="true"></span>
+                    <span class="theme-card-text">
+                      <span class="theme-card-name">Warm Retro</span>
+                      <span class="theme-card-desc">Amber and orange retro glow.</span>
+                    </span>
+                    <svg class="ic theme-tick" aria-hidden="true"><use href="#i-check"></use></svg>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <section id="work" class="panel panel-hud first-project reveal">
+            <header class="panel-head">
+              <h2 class="panel-title"><svg class="ic"><use href="#i-bolt"></use></svg>My First Project!!</h2>
+              <span class="panel-kicker">Spotify mini player</span>
+            </header>
+            <div class="first-project-logo-wrap">
+              <img class="first-project-logo" src="assets/spotify-headphones-waveform.png" alt="Neon Spotify headphones and waveform logo" />
+            </div>
+            <a class="btn btn-ghost btn-sm first-project-github" href="https://github.com/trevormbugua030-bit/My-Spotify-Mini-Player" target="_blank" rel="noopener noreferrer">
+              <svg class="ic" aria-hidden="true"><use href="#i-code"></use></svg>View the repo for this project
+            </a>
+          </section>
+
+          <section id="skills" class="panel panel-hud reveal">
+            <header class="panel-head">
+              <h2 class="panel-title"><svg class="ic"><use href="#i-bolt"></use></svg>Skills</h2>
+              <span class="panel-kicker">tools I reach for</span>
+            </header>
+            <div class="skills-grid">
+              <div class="skill-group">
+                <h4>Design</h4>
+                <div class="chips">
+                  <span>Figma</span><span>Design systems</span><span>Prototyping</span>
+                  <span>Motion</span><span>Accessibility</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <h4>Front-end</h4>
+                <div class="chips">
+                  <span>HTML/CSS</span><span>JavaScript</span><span>TypeScript</span>
+                  <span>React</span><span>Vue</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <h4>Back-end</h4>
+                <div class="chips">
+                  <span>Node.js</span><span>Go</span><span>Postgres</span>
+                  <span>REST &amp; GraphQL</span>
+                </div>
+              </div>
+              <div class="skill-group">
+                <h4>Workflow</h4>
+                <div class="chips">
+                  <span>Git</span><span>Figma → Code</span><span>Testing</span>
+                  <span>CI/CD</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="contact" class="panel panel-hud contact reveal">
+            <span class="eyebrow">FINAL // CONTACT</span>
+            <h2 class="contact-title">Have a project in mind?</h2>
+            <p class="contact-sub">
+              I'm currently available for freelance and full-time roles.
+              Drop me a line and I'll get back within a day.
+            </p>
+            <div class="contact-actions">
+              <a class="btn btn-primary" href="mailto:trevormbugua030@gmail.com">
+                <svg class="ic"><use href="#i-mail"></use></svg>trevormbugua030@gmail.com
+              </a>
+            </div>
+          </section>
+        </div>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Trevor Mbugua. Designed &amp; built with care.</p>
+      <a href="#home" class="to-top">Back to top ↑</a>
+    </footer>
+  </div>
+
+  <!-- Floating ambient music control -->
+  <aside class="music-widget" id="musicWidget" aria-label="Background music player">
+    <section class="music-popover" id="musicPopover" aria-labelledby="musicTitle" hidden>
+      <div class="music-popover-head">
+        <div><p class="music-kicker">NOW PLAYING</p><h2 id="musicTitle">Lo-fi beats</h2></div>
+        <button class="music-close" id="musicClose" type="button" aria-label="Close music player">×</button>
+      </div>
+      <p class="music-track">Chillhop Radio · live stream</p>
+      <button class="music-play" id="musicPlay" type="button" aria-pressed="false">
+        <span class="music-play-icon" aria-hidden="true">▶</span><span id="musicPlayLabel">Play music</span>
+      </button>
+      <label class="music-volume" for="musicVolume"><span>Volume</span><output id="musicVolumeValue">35%</output></label>
+      <input id="musicVolume" type="range" min="0" max="100" value="35" aria-label="Music volume" />
+      <p class="music-note" id="musicStatus" role="status">Music is off</p>
+      <audio id="ambientAudio" preload="none" loop
+        src="https://streams.ilovemusic.de/iloveradio17.mp3"></audio>
+    </section>
+    <button class="music-toggle" id="musicToggle" type="button" aria-pressed="false" aria-label="Play lo-fi music">
+      <span class="music-toggle-icon" aria-hidden="true">♫</span><span class="music-toggle-label">LO-FI</span><span class="music-live-dot" aria-hidden="true"></span>
+    </button>
+    <p class="sr-only" id="musicToggleStatus" role="status" aria-live="polite"></p>
+  </aside>
+
+  <script id="js-fallback">
+  // Inline fallback so the page is still partially usable if script.js fails to load.
+  (function(){
+    function $(s, r){ return (r||document).querySelector(s); }
+    function showError(msg){
+      var host = document.getElementById('css-fallback-fail');
+      if(!host){
+        host = document.createElement('p');
+        host.id = 'css-fallback-fail';
+        host.style.cssText = 'padding:14px; background:#ff3d68; color:#fff; border-radius:6px; max-width:720px;';
+        var main = document.getElementById('main');
+        if(!main){ document.body.appendChild(host); }
+        else { main.parentNode.insertBefore(host, main); }
+      }
+      host.textContent = msg;
+    }
+    try{
+      var needed = ['home','profile','games','settings',
+                    'bioText','snakeCanvas','gameStage','gameOverlay',
+                    'startBtn','pauseBtn','restartBtn'];
+      var missing = needed.filter(function(id){
+        return !document.getElementById(id);
+      });
+      if(missing.length){
+        showError('The page loaded, but some required elements are missing from the HTML: ' + missing.join(', '));
+      }
+      // Light-touch visibility safety net: if the main shell is somehow hidden by
+      // missing CSS, make the core sections visible anyway.
+      var main = document.getElementById('main');
+      if(main){
+        main.style.display = '';
+        var panels = main.querySelectorAll('section, article, .panel, .profile-panel, .game-stage, .topbar');
+        for(var i=0;i<panels.length;i++){
+          panels[i].style.display = panels[i].style.display || '';
+          panels[i].style.visibility = '';
+          panels[i].style.opacity = '';
+        }
+      }
+    }catch(e){
+      showError('The page loaded, but a quick self-check failed: ' + (e && e.message ? String(e.message) : String(e)));
+    }
+  })();
+</script>    <script src="script.js"></script>
+</body>
+</html>
