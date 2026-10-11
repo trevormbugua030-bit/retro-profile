@@ -869,7 +869,7 @@ function initPlatformer() {
   }
 
   function resize() {
-    const mobile = window.matchMedia("(max-width: 600px)").matches;
+    const mobile = window.matchMedia("(max-width: 700px)").matches;
     W = mobile ? 600 : BASE_W;
     H = BASE_H;
     stage.style.aspectRatio = `${W} / ${H}`;
