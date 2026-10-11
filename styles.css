@@ -1817,9 +1817,28 @@ a.meta-item:hover {
 .platformer-controls .btn { min-width: 48px; min-height: 44px; touch-action: manipulation; }
 @media (max-width: 520px) {
   .platformer-head { align-items: flex-start; }
-  .platformer-controls { gap: 6px; }
-  .platformer-controls .btn { min-width: 52px; min-height: 52px; padding-inline: 10px; }
-  .platformer-controls [data-platformer-control="jump"] { flex: 1; max-width: 140px; }
+  .platformer-controls {
+    display: grid;
+    grid-template-columns: minmax(48px, 1fr) minmax(64px, 1.2fr) minmax(48px, .9fr) minmax(48px, 1fr);
+    gap: 8px;
+    width: 100%;
+    margin-top: 10px;
+  }
+  .platformer-controls .btn {
+    min-width: 0;
+    min-height: 56px;
+    padding-inline: 8px;
+    border-radius: 8px;
+    font-size: 1rem;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .platformer-controls [data-platformer-control="left"] { grid-column: 1; grid-row: 1; }
+  .platformer-controls [data-platformer-control="jump"] { grid-column: 2; grid-row: 1; font-size: .76rem; }
+  .platformer-controls [data-platformer-control="pause"] { grid-column: 3; grid-row: 1; }
+  .platformer-controls [data-platformer-control="right"] { grid-column: 4; grid-row: 1; }
+  .platformer-game > .hint { display: none; }
   .platformer-rewards { justify-content: space-between; gap: 8px; font-size: 6px; }
   .platformer-stage { border-radius: 3px; }
   .platformer-credit { margin-top: 12px; }

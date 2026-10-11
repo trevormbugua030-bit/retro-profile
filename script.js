@@ -886,6 +886,7 @@ function initPlatformer() {
     const action = button.dataset.platformerControl;
     const press = (event) => {
       event.preventDefault();
+      if (event.pointerId != null) button.setPointerCapture?.(event.pointerId);
       if (action === "pause") { pause(); return; }
       if (game.mode !== "running") return;
       if (action === "jump") game.keys.add("jump");
@@ -893,7 +894,7 @@ function initPlatformer() {
     };
     const release = () => { if (action === "left" || action === "right") game.keys.delete(action); };
     button.addEventListener("pointerdown", press);
-    ["pointerup", "pointercancel", "pointerleave"].forEach((event) => button.addEventListener(event, release));
+    ["pointerup", "pointercancel", "lostpointercapture"].forEach((event) => button.addEventListener(event, release));
     button.addEventListener("click", (event) => { if (event.detail === 0) press(event); });
   });
   window.addEventListener("keydown", (event) => {
