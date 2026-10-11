@@ -774,7 +774,6 @@ if ("IntersectionObserver" in window) {
 /* ---------------- 9. Ambient music ---------------- */
 const musicToggle = $("#musicToggle");
 const musicToggleStatus = $("#musicToggleStatus");
-const musicVisualizerBars = $$(".music-visualizer i", musicToggle || document);
 const musicPopover = $("#musicPopover");
 const musicClose = $("#musicClose");
 const musicPlay = $("#musicPlay");
@@ -876,7 +875,6 @@ ambientAudio?.addEventListener("play", () => {
   if (toggleLabel) toggleLabel.textContent = "PAUSE";
   if (quickMusicPlayLabel) quickMusicPlayLabel.textContent = "Pause music";
   if (quickMusicStatus) quickMusicStatus.textContent = "Streaming now · Lo-fi beats";
-  startMusicVisualizer();
 });
 ambientAudio?.addEventListener("pause", () => {
   musicPlay.setAttribute("aria-pressed", "false");
@@ -890,75 +888,11 @@ ambientAudio?.addEventListener("pause", () => {
   if (toggleLabel) toggleLabel.textContent = "LO-FI";
   if (quickMusicPlayLabel) quickMusicPlayLabel.textContent = "Play music";
   if (quickMusicStatus) quickMusicStatus.textContent = "Music is off";
-  stopMusicVisualizer();
 });
 ambientAudio?.addEventListener("error", () => {
   musicStatus.textContent = "Stream unavailable. Try again in a moment.";
   if (musicToggleStatus) musicToggleStatus.textContent = "Lo-fi stream unavailable. Check your connection and try again.";
   if (quickMusicStatus) quickMusicStatus.textContent = musicStatus.textContent;
-  stopMusicVisualizer();
-});
-
-// A quiet, CAVA-like bar meter. Try the live stream's real frequency data
-// when the browser permits it; otherwise use a subtle playback-only fallback.
-let visualizerContext = null;
-let visualizerAnalyser = null;
-let visualizerFrame = 0;
-let visualizerPhase = 0;
-const visualizerPrefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-function stopMusicVisualizer() {
-  if (visualizerFrame) cancelAnimationFrame(visualizerFrame);
-  visualizerFrame = 0;
-  musicVisualizerBars.forEach((bar) => { bar.style.removeProperty("--bar-level"); });
-}
-
-function startMusicVisualizer() {
-  stopMusicVisualizer();
-  if (visualizerPrefersReducedMotion.matches || document.hidden || !musicVisualizerBars.length) return;
-
-  if (!visualizerAnalyser && window.AudioContext && ambientAudio) {
-    try {
-      visualizerContext = new AudioContext();
-      visualizerAnalyser = visualizerContext.createAnalyser();
-      visualizerAnalyser.fftSize = 128;
-      visualizerAnalyser.smoothingTimeConstant = 0.82;
-      // Keep the element connected to the speakers after routing through Web Audio.
-      visualizerContext.createMediaElementSource(ambientAudio).connect(visualizerAnalyser);
-      visualizerAnalyser.connect(visualizerContext.destination);
-    } catch {
-      visualizerAnalyser = null;
-    }
-  }
-
-  if (visualizerContext?.state === "suspended") visualizerContext.resume().catch(() => {});
-  const bins = visualizerAnalyser ? new Uint8Array(visualizerAnalyser.frequencyBinCount) : null;
-  const reducedMotion = visualizerPrefersReducedMotion.matches;
-  const draw = () => {
-    visualizerFrame = 0;
-    if (ambientAudio?.paused || document.hidden || reducedMotion) return;
-    visualizerPhase += 0.075;
-    if (bins) visualizerAnalyser.getByteFrequencyData(bins);
-    musicVisualizerBars.forEach((bar, index) => {
-      // If the stream disallows cross-origin analysis, retain an understated
-      // playback-reactive pulse rather than risking or interrupting audio.
-      const level = bins
-        ? .48 + (bins[Math.floor((index + 1) * bins.length / (musicVisualizerBars.length + 1))] / 255) * 1.05
-        : .45 + (Math.sin(visualizerPhase + index * .92) + 1) * .4;
-      bar.style.setProperty("--bar-level", level.toFixed(2));
-    });
-    visualizerFrame = requestAnimationFrame(draw);
-  };
-  visualizerFrame = requestAnimationFrame(draw);
-}
-
-document.addEventListener("visibilitychange", () => {
-  if (document.hidden) stopMusicVisualizer();
-  else if (ambientAudio && !ambientAudio.paused) startMusicVisualizer();
-});
-visualizerPrefersReducedMotion.addEventListener?.("change", () => {
-  if (visualizerPrefersReducedMotion.matches) stopMusicVisualizer();
-  else if (ambientAudio && !ambientAudio.paused) startMusicVisualizer();
 });
 
 /* ---------------- Top-bar quick settings menu ---------------- */
