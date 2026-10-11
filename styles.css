@@ -1807,6 +1807,9 @@ a.meta-item:hover {
   justify-content: center;
   gap: 8px;
   margin-top: 12px;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 .platformer-credit {
   margin: 8px 0 0;
@@ -1814,7 +1817,16 @@ a.meta-item:hover {
   font-size: .72rem;
   text-align: center;
 }
-.platformer-controls .btn { min-width: 48px; min-height: 44px; touch-action: manipulation; }
+.platformer-controls .btn {
+  min-width: 48px;
+  min-height: 44px;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.platformer-controls .btn:active { transform: translateY(2px); filter: brightness(1.12); }
 @media (max-width: 520px) {
   .platformer-head { align-items: flex-start; }
   .platformer-controls {
@@ -1831,8 +1843,6 @@ a.meta-item:hover {
     border-radius: 8px;
     font-size: 1rem;
     touch-action: none;
-    user-select: none;
-    -webkit-user-select: none;
   }
   .platformer-controls [data-platformer-control="left"] { grid-column: 1; grid-row: 1; }
   .platformer-controls [data-platformer-control="jump"] { grid-column: 2; grid-row: 1; font-size: .76rem; }
