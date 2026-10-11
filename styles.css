@@ -1831,7 +1831,8 @@ a.meta-item:hover {
   .platformer-head { align-items: flex-start; }
   .platformer-controls {
     display: grid;
-    grid-template-columns: minmax(48px, 1fr) minmax(64px, 1.2fr) minmax(48px, .9fr) minmax(48px, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: 56px 48px;
     gap: 8px;
     width: 100%;
     margin-top: 10px;
@@ -1846,8 +1847,8 @@ a.meta-item:hover {
   }
   .platformer-controls [data-platformer-control="left"] { grid-column: 1; grid-row: 1; }
   .platformer-controls [data-platformer-control="jump"] { grid-column: 2; grid-row: 1; font-size: .76rem; }
-  .platformer-controls [data-platformer-control="pause"] { grid-column: 3; grid-row: 1; }
-  .platformer-controls [data-platformer-control="right"] { grid-column: 4; grid-row: 1; }
+  .platformer-controls [data-platformer-control="right"] { grid-column: 3; grid-row: 1; }
+  .platformer-controls [data-platformer-control="pause"] { grid-column: 2; grid-row: 2; min-height: 44px; }
   .platformer-game > .hint { display: none; }
   .platformer-rewards { justify-content: space-between; gap: 8px; font-size: 6px; }
   .platformer-stage { border-radius: 3px; }
