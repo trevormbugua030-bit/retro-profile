@@ -1766,6 +1766,15 @@ a.meta-item:hover {
   white-space: nowrap;
 }
 .platformer-score b { color: var(--accent-2); font-size: 12px; }
+.platformer-rewards {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  margin: -4px 0 10px;
+  color: var(--muted);
+  font: 7px var(--font-pixel);
+}
+.platformer-rewards b { color: var(--accent-2); font-size: 10px; }
 .platformer-stage {
   position: relative;
   width: 100%;
@@ -1809,7 +1818,11 @@ a.meta-item:hover {
 @media (max-width: 520px) {
   .platformer-head { align-items: flex-start; }
   .platformer-controls { gap: 6px; }
-  .platformer-controls .btn { min-width: 42px; padding-inline: 10px; }
+  .platformer-controls .btn { min-width: 52px; min-height: 52px; padding-inline: 10px; }
+  .platformer-controls [data-platformer-control="jump"] { flex: 1; max-width: 140px; }
+  .platformer-rewards { justify-content: space-between; gap: 8px; font-size: 6px; }
+  .platformer-stage { border-radius: 3px; }
+  .platformer-credit { margin-top: 12px; }
 }
 
 .memory-head,

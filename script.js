@@ -584,6 +584,9 @@ function initPlatformer() {
 
   const ctx = canvas.getContext?.("2d");
   const scoreLabel = $("#platformerScore");
+  const levelLabel = $("#platformerLevel");
+  const byteLabel = $("#platformerBytes");
+  const comboLabel = $("#platformerCombo");
   const message = $("#platformerMessage");
   const status = $("#platformerStatus");
   const controls = $$("[data-platformer-control]");
@@ -593,10 +596,12 @@ function initPlatformer() {
     return;
   }
 
-  const W = 800;
-  const H = 440;
+  let W = 800;
+  let H = 440;
+  const BASE_W = 800;
+  const BASE_H = 440;
   const player = { x: 90, y: 0, w: 26, h: 34, vx: 0, vy: 0, grounded: false };
-  const game = { mode: "ready", score: 0, camera: 0, platforms: [], enemies: [], last: 0, raf: 0, spawnAt: 700, keys: new Set() };
+  const game = { mode: "ready", score: 0, bytes: 0, combo: 0, level: 1, camera: 0, platforms: [], enemies: [], rewards: [], last: 0, raf: 0, spawnAt: 700, keys: new Set() };
   let palette = {};
   function readPalette() {
     const css = getComputedStyle(document.documentElement);
@@ -610,11 +615,30 @@ function initPlatformer() {
   window.addEventListener("themechange", readPalette);
 
   function addPlatform(x, y, width) { game.platforms.push({ x, y, w: width, h: 12 }); }
+  function addBotsOnPlatform(x, y, width, level = game.level) {
+    const count = Math.random() < Math.min(.9, .35 + level * .035) ? (Math.random() < .45 ? 2 : 1) : 0;
+    for (let i = 0; i < count; i++) {
+      const span = Math.max(18, width - 32);
+      const min = x + 4 + (count === 2 ? i * span * .48 : 0);
+      const max = count === 2 ? min + span * .48 : x + width - 26;
+      game.enemies.push({ x: min + Math.random() * Math.max(2, max - min), y: y - 22, w: 22, h: 22, vx: (38 + Math.random() * 35 + level * 3) * (Math.random() < .5 ? -1 : 1), min, max, alive: true });
+    }
+  }
+  function addByteLine(x, y, width) {
+    if (Math.random() > .82) return;
+    const count = 2 + Math.floor(Math.random() * 4);
+    const span = Math.max(30, width - 30);
+    for (let i = 0; i < count; i++) game.rewards.push({ x: x + 15 + span * i / Math.max(1, count - 1), y: y - 35 - (i % 2) * 11, r: 6, taken: false });
+  }
   function generateWorld() {
     game.platforms = [];
     game.enemies = [];
+    game.rewards = [];
     game.camera = 0;
     game.score = 0;
+    game.bytes = 0;
+    game.combo = 0;
+    game.level = 1;
     game.spawnAt = 700;
     addPlatform(20, 380, 270);
     let x = 330;
@@ -625,9 +649,8 @@ function initPlatformer() {
       x += gap;
       const width = 100 + Math.random() * 90;
       addPlatform(x, y, width);
-      if (Math.random() < .44) {
-        game.enemies.push({ x: x + 12 + Math.random() * Math.max(12, width - 34), y: y - 22, w: 22, h: 22, vx: 30 + Math.random() * 22, min: x + 4, max: x + width - 26, alive: true });
-      }
+      addBotsOnPlatform(x, y, width);
+      addByteLine(x, y, width);
       x += width;
     }
     player.x = 90;
@@ -636,6 +659,13 @@ function initPlatformer() {
     player.grounded = false;
     game.keys.clear();
     if (scoreLabel) scoreLabel.textContent = "0";
+    syncRewardUi();
+  }
+
+  function syncRewardUi() {
+    if (levelLabel) levelLabel.textContent = String(game.level);
+    if (byteLabel) byteLabel.textContent = String(game.bytes);
+    if (comboLabel) comboLabel.textContent = `×${game.combo}`;
   }
 
   function draw() {
@@ -674,6 +704,15 @@ function initPlatformer() {
       ctx.fillRect(sx + 14, e.y + 9, 4, 4);
       ctx.fillRect(sx + 4, e.y + e.h, 5, 4);
       ctx.fillRect(sx + 14, e.y + e.h, 5, 4);
+    });
+    game.rewards.forEach((reward) => {
+      if (reward.taken) return;
+      const sx = reward.x - cam;
+      if (sx < -20 || sx > W + 20) return;
+      ctx.fillStyle = palette.highlight;
+      ctx.fillRect(sx - reward.r, reward.y - reward.r, reward.r * 2, reward.r * 2);
+      ctx.fillStyle = palette.bg;
+      ctx.fillRect(sx - 2, reward.y - 2, 4, 4);
     });
     const px = player.x - cam;
     ctx.fillStyle = palette.highlight;
@@ -734,8 +773,29 @@ function initPlatformer() {
 
     const targetCamera = Math.max(0, player.x - 225);
     game.camera += (targetCamera - game.camera) * Math.min(1, dt * 5);
-    game.score = Math.max(game.score, Math.floor(player.x / 20));
+    const nextLevel = 1 + Math.floor(player.x / 900);
+    if (nextLevel > game.level) {
+      game.level = nextLevel;
+      game.score += 50;
+      syncRewardUi();
+      if (status) status.textContent = `Level ${game.level}! Level-up bonus: 50 points.`;
+    }
+    game.score = Math.max(game.score, Math.floor(player.x / 20) + game.bytes * 10);
     if (scoreLabel) scoreLabel.textContent = String(game.score);
+
+    game.rewards.forEach((reward) => {
+      if (reward.taken) return;
+      const dx = player.x + player.w / 2 - reward.x;
+      const dy = player.y + player.h / 2 - reward.y;
+      if (dx * dx + dy * dy < 24 * 24) {
+        reward.taken = true;
+        game.bytes += 1;
+        game.combo += 1;
+        game.score += 10 + Math.min(game.combo, 10) * 2;
+        syncRewardUi();
+        if (scoreLabel) scoreLabel.textContent = String(game.score);
+      }
+    });
 
     game.enemies.forEach((e) => {
       if (!e.alive) return;
@@ -748,7 +808,9 @@ function initPlatformer() {
         if (wasAbove) {
           e.alive = false;
           player.vy = -270;
-          game.score += 15;
+          game.combo += 1;
+          game.score += 25 + Math.min(game.combo, 10) * 5;
+          syncRewardUi();
           if (scoreLabel) scoreLabel.textContent = String(game.score);
         } else endRun("A bot caught you!");
       }
@@ -761,11 +823,13 @@ function initPlatformer() {
       const y = Math.max(205, Math.min(368, last.y + (Math.random() - .5) * 92));
       const width = 100 + Math.random() * 90;
       addPlatform(x, y, width);
-      if (Math.random() < .55) game.enemies.push({ x: x + 10 + Math.random() * (width - 32), y: y - 22, w: 22, h: 22, vx: 34 + Math.random() * 24, min: x + 3, max: x + width - 25, alive: true });
+      addBotsOnPlatform(x, y, width);
+      addByteLine(x, y, width);
       game.spawnAt = x + width;
     }
     game.platforms = game.platforms.filter((p) => p.x + p.w > game.camera - 200);
     game.enemies = game.enemies.filter((e) => e.x + e.w > game.camera - 200 && (e.alive || e.x > game.camera - 250));
+    game.rewards = game.rewards.filter((reward) => reward.x > game.camera - 200 && !reward.taken);
     if (player.y > H + 80) endRun("You missed a platform!");
   }
 
@@ -805,6 +869,10 @@ function initPlatformer() {
   }
 
   function resize() {
+    const mobile = window.matchMedia("(max-width: 600px)").matches;
+    W = mobile ? 600 : BASE_W;
+    H = BASE_H;
+    stage.style.aspectRatio = `${W} / ${H}`;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = W * dpr;
     canvas.height = H * dpr;
