@@ -614,16 +614,19 @@ function initPlatformer() {
   }
   window.addEventListener("themechange", readPalette);
 
-  function addPlatform(x, y, width) { game.platforms.push({ x, y, w: width, h: 12 }); }
-  function addBotsOnPlatform(x, y, width, level = game.level) {
+  function addPlatform(x, y, width) {
+    const platform = { x, y, w: width, h: 12, botSpawnChecked: false };
+    game.platforms.push(platform);
+    return platform;
+  }
+  function addBotsOnPlatform(platform) {
+    if (platform.botSpawnChecked) return;
+    platform.botSpawnChecked = true;
     // Keep bots occasional and slow so new players have room to react.
-    const count = Math.random() < .2 ? 1 : 0;
-    for (let i = 0; i < count; i++) {
-      const span = Math.max(18, width - 32);
-      const min = x + 4 + (count === 2 ? i * span * .48 : 0);
-      const max = count === 2 ? min + span * .48 : x + width - 26;
-      game.enemies.push({ x: min + Math.random() * Math.max(2, max - min), y: y - 22, w: 22, h: 22, vx: (20 + Math.random() * 16) * (Math.random() < .5 ? -1 : 1), min, max, alive: true });
-    }
+    if (Math.random() >= .2) return;
+    const min = platform.x + 4;
+    const max = platform.x + platform.w - 26;
+    game.enemies.push({ x: min + Math.random() * Math.max(2, max - min), y: platform.y - 22, w: 22, h: 22, vx: (20 + Math.random() * 16) * (Math.random() < .5 ? -1 : 1), min, max, alive: true, platform });
   }
   function addByteLine(x, y, width) {
     if (Math.random() > .7) return;
@@ -649,8 +652,8 @@ function initPlatformer() {
       y = Math.max(245, Math.min(368, y + (Math.random() - .5) * 58));
       x += gap;
       const width = 130 + Math.random() * 85;
-      addPlatform(x, y, width);
-      addBotsOnPlatform(x, y, width);
+      const platform = addPlatform(x, y, width);
+      addBotsOnPlatform(platform);
       addByteLine(x, y, width);
       x += width;
     }
@@ -833,8 +836,8 @@ function initPlatformer() {
       const x = last.x + last.w + gap;
       const y = Math.max(245, Math.min(368, last.y + (Math.random() - .5) * 58));
       const width = 130 + Math.random() * 85;
-      addPlatform(x, y, width);
-      addBotsOnPlatform(x, y, width);
+      const platform = addPlatform(x, y, width);
+      addBotsOnPlatform(platform);
       addByteLine(x, y, width);
       game.spawnAt = x + width;
     }
