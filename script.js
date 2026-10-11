@@ -852,12 +852,14 @@ async function toggleMusicPlayback() {
     ambientAudio.pause();
     return;
   }
-  musicStatus.textContent = "Connecting to the live stream…";
+  if (musicStatus) musicStatus.textContent = "Connecting to the live stream…";
+  if (quickMusicStatus) quickMusicStatus.textContent = "Connecting to the live stream…";
   try {
     await ambientAudio.play();
   } catch {
-    musicStatus.textContent = "Could not connect. Check your connection and try again.";
-    if (quickMusicStatus) quickMusicStatus.textContent = musicStatus.textContent;
+    const message = "Could not start the stream. Check your connection or try again later.";
+    if (musicStatus) musicStatus.textContent = message;
+    if (quickMusicStatus) quickMusicStatus.textContent = message;
   }
 }
 musicPlay?.addEventListener("click", toggleMusicPlayback);
@@ -866,7 +868,7 @@ quickMusicPlay?.addEventListener("click", toggleMusicPlayback);
 ambientAudio?.addEventListener("play", () => {
   musicPlay.setAttribute("aria-pressed", "true");
   musicPlayLabel.textContent = "Pause music";
-  musicStatus.textContent = "Streaming now · Lo-fi beats";
+  musicStatus.textContent = "Streaming now · FluxFM Chillhop";
   if (musicToggleStatus) musicToggleStatus.textContent = "Lo-fi music is playing.";
   musicToggle?.classList.add("is-playing");
   musicToggle?.setAttribute("aria-pressed", "true");
@@ -874,7 +876,7 @@ ambientAudio?.addEventListener("play", () => {
   const toggleLabel = musicToggle?.querySelector(".music-toggle-label");
   if (toggleLabel) toggleLabel.textContent = "PAUSE";
   if (quickMusicPlayLabel) quickMusicPlayLabel.textContent = "Pause music";
-  if (quickMusicStatus) quickMusicStatus.textContent = "Streaming now · Lo-fi beats";
+  if (quickMusicStatus) quickMusicStatus.textContent = "Streaming now · FluxFM Chillhop";
 });
 ambientAudio?.addEventListener("pause", () => {
   musicPlay.setAttribute("aria-pressed", "false");
@@ -890,9 +892,10 @@ ambientAudio?.addEventListener("pause", () => {
   if (quickMusicStatus) quickMusicStatus.textContent = "Music is off";
 });
 ambientAudio?.addEventListener("error", () => {
-  musicStatus.textContent = "Stream unavailable. Try again in a moment.";
+  const message = "Stream unavailable. Check your connection or try again later.";
+  if (musicStatus) musicStatus.textContent = message;
   if (musicToggleStatus) musicToggleStatus.textContent = "Lo-fi stream unavailable. Check your connection and try again.";
-  if (quickMusicStatus) quickMusicStatus.textContent = musicStatus.textContent;
+  if (quickMusicStatus) quickMusicStatus.textContent = message;
 });
 
 /* ---------------- Top-bar quick settings menu ---------------- */
