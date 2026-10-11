@@ -616,16 +616,17 @@ function initPlatformer() {
 
   function addPlatform(x, y, width) { game.platforms.push({ x, y, w: width, h: 12 }); }
   function addBotsOnPlatform(x, y, width, level = game.level) {
-    const count = Math.random() < Math.min(.9, .35 + level * .035) ? (Math.random() < .45 ? 2 : 1) : 0;
+    // Keep bots occasional and slow so new players have room to react.
+    const count = Math.random() < .2 ? 1 : 0;
     for (let i = 0; i < count; i++) {
       const span = Math.max(18, width - 32);
       const min = x + 4 + (count === 2 ? i * span * .48 : 0);
       const max = count === 2 ? min + span * .48 : x + width - 26;
-      game.enemies.push({ x: min + Math.random() * Math.max(2, max - min), y: y - 22, w: 22, h: 22, vx: (38 + Math.random() * 35 + level * 3) * (Math.random() < .5 ? -1 : 1), min, max, alive: true });
+      game.enemies.push({ x: min + Math.random() * Math.max(2, max - min), y: y - 22, w: 22, h: 22, vx: (20 + Math.random() * 16) * (Math.random() < .5 ? -1 : 1), min, max, alive: true });
     }
   }
   function addByteLine(x, y, width) {
-    if (Math.random() > .82) return;
+    if (Math.random() > .7) return;
     const count = 2 + Math.floor(Math.random() * 4);
     const span = Math.max(30, width - 30);
     for (let i = 0; i < count; i++) game.rewards.push({ x: x + 15 + span * i / Math.max(1, count - 1), y: y - 35 - (i % 2) * 11, r: 6, taken: false });
@@ -644,10 +645,10 @@ function initPlatformer() {
     let x = 330;
     let y = 345;
     while (x < 1900) {
-      const gap = 52 + Math.random() * 58;
-      y = Math.max(205, Math.min(368, y + (Math.random() - .5) * 90));
+      const gap = 32 + Math.random() * 35;
+      y = Math.max(245, Math.min(368, y + (Math.random() - .5) * 58));
       x += gap;
-      const width = 100 + Math.random() * 90;
+      const width = 130 + Math.random() * 85;
       addPlatform(x, y, width);
       addBotsOnPlatform(x, y, width);
       addByteLine(x, y, width);
@@ -743,12 +744,12 @@ function initPlatformer() {
     const left = game.keys.has("ArrowLeft") || game.keys.has("a") || game.keys.has("A") || game.keys.has("left");
     const right = game.keys.has("ArrowRight") || game.keys.has("d") || game.keys.has("D") || game.keys.has("right");
     const direction = Number(right) - Number(left);
-    player.vx += (direction * 260 - player.vx) * Math.min(1, dt * 12);
+    player.vx += (direction * 300 - player.vx) * Math.min(1, dt * 12);
     player.x += player.vx * dt;
     player.x = Math.max(0, player.x);
     const wasGrounded = player.grounded;
     player.grounded = false;
-    player.vy = Math.min(600, player.vy + 1100 * dt);
+    player.vy = Math.min(520, player.vy + 900 * dt);
     const previousBottom = player.y + player.h;
     player.y += player.vy * dt;
     if (player.vy >= 0) {
@@ -762,7 +763,7 @@ function initPlatformer() {
       }
     }
     if (wasGrounded && (game.keys.has("jump") || game.keys.has(" ") || game.keys.has("ArrowUp") || game.keys.has("w") || game.keys.has("W"))) {
-      player.vy = -450;
+      player.vy = -500;
       player.grounded = false;
       game.keys.delete("jump");
       game.keys.delete(" ");
@@ -812,16 +813,26 @@ function initPlatformer() {
           game.score += 25 + Math.min(game.combo, 10) * 5;
           syncRewardUi();
           if (scoreLabel) scoreLabel.textContent = String(game.score);
-        } else endRun("A bot caught you!");
+        } else {
+          // A side bump costs a few points but lets the player continue.
+          e.alive = false;
+          player.vy = -220;
+          player.vx = player.x < e.x ? -120 : 120;
+          game.score = Math.max(0, game.score - 5);
+          game.combo = 0;
+          syncRewardUi();
+          if (scoreLabel) scoreLabel.textContent = String(game.score);
+          if (status) status.textContent = "Bot bump! You lost 5 points, but your run continues.";
+        }
       }
     });
 
     while (game.spawnAt < player.x + W + 300) {
       const last = game.platforms[game.platforms.length - 1];
-      const gap = 52 + Math.random() * 60;
+      const gap = 32 + Math.random() * 35;
       const x = last.x + last.w + gap;
-      const y = Math.max(205, Math.min(368, last.y + (Math.random() - .5) * 92));
-      const width = 100 + Math.random() * 90;
+      const y = Math.max(245, Math.min(368, last.y + (Math.random() - .5) * 58));
+      const width = 130 + Math.random() * 85;
       addPlatform(x, y, width);
       addBotsOnPlatform(x, y, width);
       addByteLine(x, y, width);
