@@ -1752,6 +1752,66 @@ a.meta-item:hover {
   border-top: 1px solid var(--border);
 }
 
+/* Random-level pixel platformer */
+.platformer-game {
+  max-width: 720px;
+  margin: 42px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.platformer-head { margin-bottom: 14px; }
+.platformer-score {
+  color: var(--muted);
+  font: 8px var(--font-pixel);
+  white-space: nowrap;
+}
+.platformer-score b { color: var(--accent-2); font-size: 12px; }
+.platformer-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 20 / 11;
+  overflow: hidden;
+  border: 1px solid var(--border-hi);
+  border-radius: 4px;
+  background: var(--snake-bg);
+  box-shadow: inset 0 0 38px rgba(0, 0, 0, .35);
+}
+#platformerCanvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.platformer-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px;
+  text-align: center;
+  background: rgba(4, 4, 12, .8);
+}
+.platformer-overlay[hidden] { display: none; }
+.platformer-overlay .overlay-title { margin: 0; }
+.platformer-overlay .overlay-msg { margin: 0; }
+.platformer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.platformer-credit {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: .72rem;
+  text-align: center;
+}
+.platformer-controls .btn { min-width: 48px; min-height: 44px; touch-action: manipulation; }
+@media (max-width: 520px) {
+  .platformer-head { align-items: flex-start; }
+  .platformer-controls { gap: 6px; }
+  .platformer-controls .btn { min-width: 42px; padding-inline: 10px; }
+}
+
 .memory-head,
 .memory-tools {
   display: flex;

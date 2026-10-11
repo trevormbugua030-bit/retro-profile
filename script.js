@@ -574,6 +574,278 @@ function initSnake() {
 
 initSnake();
 
+/* ---------------- Random pixel platformer ---------------- */
+function initPlatformer() {
+  const canvas = $("#platformerCanvas");
+  const stage = $("#platformerStage");
+  const overlay = $("#platformerOverlay");
+  const startButton = $("#platformerStart");
+  if (!canvas || !stage || !overlay || !startButton) return;
+
+  const ctx = canvas.getContext?.("2d");
+  const scoreLabel = $("#platformerScore");
+  const message = $("#platformerMessage");
+  const status = $("#platformerStatus");
+  const controls = $$("[data-platformer-control]");
+  if (!ctx) {
+    if (message) message.textContent = "Canvas is unavailable in this browser.";
+    startButton.disabled = true;
+    return;
+  }
+
+  const W = 800;
+  const H = 440;
+  const player = { x: 90, y: 0, w: 26, h: 34, vx: 0, vy: 0, grounded: false };
+  const game = { mode: "ready", score: 0, camera: 0, platforms: [], enemies: [], last: 0, raf: 0, spawnAt: 700, keys: new Set() };
+  let palette = {};
+  function readPalette() {
+    const css = getComputedStyle(document.documentElement);
+    const color = (key, fallback) => css.getPropertyValue(key).trim() || fallback;
+    palette = {
+      bg: color("--snake-bg", "#0b0b20"), grid: color("--snake-grid", "rgba(155,92,255,.15)"),
+      platform: color("--accent", "#9b5cff"), highlight: color("--accent-2", "#3ee0ff"),
+      enemy: color("--hot", "#ff3d68"), text: color("--muted", "#a49cd6")
+    };
+  }
+  window.addEventListener("themechange", readPalette);
+
+  function addPlatform(x, y, width) { game.platforms.push({ x, y, w: width, h: 12 }); }
+  function generateWorld() {
+    game.platforms = [];
+    game.enemies = [];
+    game.camera = 0;
+    game.score = 0;
+    game.spawnAt = 700;
+    addPlatform(20, 380, 270);
+    let x = 330;
+    let y = 345;
+    while (x < 1900) {
+      const gap = 52 + Math.random() * 58;
+      y = Math.max(205, Math.min(368, y + (Math.random() - .5) * 90));
+      x += gap;
+      const width = 100 + Math.random() * 90;
+      addPlatform(x, y, width);
+      if (Math.random() < .44) {
+        game.enemies.push({ x: x + 12 + Math.random() * Math.max(12, width - 34), y: y - 22, w: 22, h: 22, vx: 30 + Math.random() * 22, min: x + 4, max: x + width - 26, alive: true });
+      }
+      x += width;
+    }
+    player.x = 90;
+    player.y = 330;
+    player.vx = player.vy = 0;
+    player.grounded = false;
+    game.keys.clear();
+    if (scoreLabel) scoreLabel.textContent = "0";
+  }
+
+  function draw() {
+    const cam = game.camera;
+    ctx.fillStyle = palette.bg;
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = palette.grid;
+    for (let x = -((cam * .18) % 40); x < W; x += 40) ctx.fillRect(x, 0, 1, H);
+    for (let y = 20; y < H; y += 40) ctx.fillRect(0, y, W, 1);
+    // Soft retro skyline for a little depth.
+    ctx.fillStyle = "rgba(120,100,180,.09)";
+    for (let i = 0; i < 13; i++) {
+      const bx = ((i * 97 - cam * .32) % (W + 100) + W + 100) % (W + 100) - 50;
+      const bh = 45 + (i * 31 % 95);
+      ctx.fillRect(bx, H - bh, 36, bh);
+    }
+    game.platforms.forEach((p) => {
+      const sx = p.x - cam;
+      if (sx > W || sx + p.w < 0) return;
+      ctx.fillStyle = palette.platform;
+      ctx.fillRect(sx, p.y, p.w, p.h);
+      ctx.fillStyle = palette.highlight;
+      ctx.fillRect(sx, p.y, p.w, 3);
+      ctx.fillStyle = "rgba(0,0,0,.22)";
+      for (let bx = sx + 8; bx < sx + p.w - 4; bx += 22) ctx.fillRect(bx, p.y + 6, 10, 2);
+    });
+    game.enemies.forEach((e) => {
+      if (!e.alive) return;
+      const sx = e.x - cam;
+      if (sx < -e.w || sx > W) return;
+      ctx.fillStyle = palette.enemy;
+      ctx.fillRect(sx, e.y + 4, e.w, e.h - 4);
+      ctx.fillRect(sx + 4, e.y, e.w - 8, 6);
+      ctx.fillStyle = palette.bg;
+      ctx.fillRect(sx + 5, e.y + 9, 4, 4);
+      ctx.fillRect(sx + 14, e.y + 9, 4, 4);
+      ctx.fillRect(sx + 4, e.y + e.h, 5, 4);
+      ctx.fillRect(sx + 14, e.y + e.h, 5, 4);
+    });
+    const px = player.x - cam;
+    ctx.fillStyle = palette.highlight;
+    ctx.fillRect(px + 3, player.y, player.w - 6, 8);
+    ctx.fillStyle = palette.platform;
+    ctx.fillRect(px, player.y + 7, player.w, player.h - 13);
+    ctx.fillStyle = palette.bg;
+    ctx.fillRect(px + 6, player.y + 12, 4, 4);
+    ctx.fillRect(px + 16, player.y + 12, 4, 4);
+    ctx.fillStyle = palette.highlight;
+    ctx.fillRect(px + 3, player.y + player.h - 5, 8, 5);
+    ctx.fillRect(px + 15, player.y + player.h - 5, 8, 5);
+    if (game.mode !== "running") return;
+  }
+
+  function endRun(text) {
+    game.mode = "over";
+    cancelAnimationFrame(game.raf);
+    game.raf = 0;
+    overlay.hidden = false;
+    if (message) message.textContent = `${text} Distance score: ${game.score}.`;
+    startButton.textContent = "Run Again";
+    if (status) status.textContent = `${text} Final score ${game.score}.`;
+    draw();
+  }
+
+  function update(dt) {
+    const left = game.keys.has("ArrowLeft") || game.keys.has("a") || game.keys.has("A") || game.keys.has("left");
+    const right = game.keys.has("ArrowRight") || game.keys.has("d") || game.keys.has("D") || game.keys.has("right");
+    const direction = Number(right) - Number(left);
+    player.vx += (direction * 260 - player.vx) * Math.min(1, dt * 12);
+    player.x += player.vx * dt;
+    player.x = Math.max(0, player.x);
+    const wasGrounded = player.grounded;
+    player.grounded = false;
+    player.vy = Math.min(600, player.vy + 1100 * dt);
+    const previousBottom = player.y + player.h;
+    player.y += player.vy * dt;
+    if (player.vy >= 0) {
+      for (const p of game.platforms) {
+        if (player.x + player.w > p.x && player.x < p.x + p.w && previousBottom <= p.y + 5 && player.y + player.h >= p.y) {
+          player.y = p.y - player.h;
+          player.vy = 0;
+          player.grounded = true;
+          break;
+        }
+      }
+    }
+    if (wasGrounded && (game.keys.has("jump") || game.keys.has(" ") || game.keys.has("ArrowUp") || game.keys.has("w") || game.keys.has("W"))) {
+      player.vy = -450;
+      player.grounded = false;
+      game.keys.delete("jump");
+      game.keys.delete(" ");
+      game.keys.delete("ArrowUp");
+      game.keys.delete("w");
+      game.keys.delete("W");
+    }
+
+    const targetCamera = Math.max(0, player.x - 225);
+    game.camera += (targetCamera - game.camera) * Math.min(1, dt * 5);
+    game.score = Math.max(game.score, Math.floor(player.x / 20));
+    if (scoreLabel) scoreLabel.textContent = String(game.score);
+
+    game.enemies.forEach((e) => {
+      if (!e.alive) return;
+      e.x += e.vx * dt;
+      if (e.x < e.min) { e.x = e.min; e.vx = Math.abs(e.vx); }
+      if (e.x + e.w > e.max) { e.x = e.max - e.w; e.vx = -Math.abs(e.vx); }
+      const intersects = player.x < e.x + e.w && player.x + player.w > e.x && player.y < e.y + e.h && player.y + player.h > e.y;
+      if (intersects) {
+        const wasAbove = previousBottom <= e.y + 8 && player.vy > 0;
+        if (wasAbove) {
+          e.alive = false;
+          player.vy = -270;
+          game.score += 15;
+          if (scoreLabel) scoreLabel.textContent = String(game.score);
+        } else endRun("A bot caught you!");
+      }
+    });
+
+    while (game.spawnAt < player.x + W + 300) {
+      const last = game.platforms[game.platforms.length - 1];
+      const gap = 52 + Math.random() * 60;
+      const x = last.x + last.w + gap;
+      const y = Math.max(205, Math.min(368, last.y + (Math.random() - .5) * 92));
+      const width = 100 + Math.random() * 90;
+      addPlatform(x, y, width);
+      if (Math.random() < .55) game.enemies.push({ x: x + 10 + Math.random() * (width - 32), y: y - 22, w: 22, h: 22, vx: 34 + Math.random() * 24, min: x + 3, max: x + width - 25, alive: true });
+      game.spawnAt = x + width;
+    }
+    game.platforms = game.platforms.filter((p) => p.x + p.w > game.camera - 200);
+    game.enemies = game.enemies.filter((e) => e.x + e.w > game.camera - 200 && (e.alive || e.x > game.camera - 250));
+    if (player.y > H + 80) endRun("You missed a platform!");
+  }
+
+  function frame(now) {
+    if (game.mode !== "running") return;
+    const dt = Math.min(.04, (now - (game.last || now)) / 1000);
+    game.last = now;
+    update(dt);
+    draw();
+    if (game.mode === "running") game.raf = requestAnimationFrame(frame);
+  }
+
+  function run() {
+    cancelAnimationFrame(game.raf);
+    game.mode = "running";
+    game.last = 0;
+    generateWorld();
+    overlay.hidden = true;
+    canvas.focus({ preventScroll: true });
+    if (status) status.textContent = "Run started. Use left and right to move and jump to dodge bots.";
+    game.raf = requestAnimationFrame(frame);
+  }
+
+  function pause() {
+    if (game.mode === "running") {
+      game.mode = "paused";
+      cancelAnimationFrame(game.raf);
+      overlay.hidden = false;
+      if (message) message.textContent = `Paused · distance score ${game.score}.`;
+      startButton.textContent = "Resume";
+    } else if (game.mode === "paused") {
+      game.mode = "running";
+      game.last = 0;
+      overlay.hidden = true;
+      game.raf = requestAnimationFrame(frame);
+    }
+  }
+
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+  window.addEventListener("resize", resize);
+  window.addEventListener("themechange", draw);
+  startButton.addEventListener("click", () => game.mode === "paused" ? pause() : run());
+  controls.forEach((button) => {
+    const action = button.dataset.platformerControl;
+    const press = (event) => {
+      event.preventDefault();
+      if (action === "pause") { pause(); return; }
+      if (game.mode !== "running") return;
+      if (action === "jump") game.keys.add("jump");
+      else game.keys.add(action);
+    };
+    const release = () => { if (action === "left" || action === "right") game.keys.delete(action); };
+    button.addEventListener("pointerdown", press);
+    ["pointerup", "pointercancel", "pointerleave"].forEach((event) => button.addEventListener(event, release));
+    button.addEventListener("click", (event) => { if (event.detail === 0) press(event); });
+  });
+  window.addEventListener("keydown", (event) => {
+    if (event.metaKey || event.ctrlKey || event.altKey || event.target instanceof Element && event.target.closest("input, textarea, select, [contenteditable='true'], #musicWidget")) return;
+    const key = event.key;
+    if (["ArrowLeft", "ArrowRight", "ArrowUp", " "].includes(key) && game.mode === "running") event.preventDefault();
+    if (["ArrowLeft", "ArrowRight", "ArrowUp", " ", "a", "A", "d", "D", "w", "W"].includes(key)) game.keys.add(key);
+    if (["p", "P", "Escape"].includes(key) && game.mode !== "ready" && game.mode !== "over") pause();
+    if (["Enter"].includes(key) && game.mode !== "running" && document.activeElement === canvas) game.mode === "paused" ? pause() : run();
+  });
+  window.addEventListener("keyup", (event) => game.keys.delete(event.key));
+  window.addEventListener("blur", () => game.keys.clear());
+  document.addEventListener("visibilitychange", () => { if (document.hidden && game.mode === "running") pause(); });
+  readPalette();
+  generateWorld();
+  resize();
+}
+
+initPlatformer();
+
 /* ---------------- Memory Match ---------------- */
 function initMemoryMatch() {
   const board = $("#memoryBoard");

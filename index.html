@@ -483,6 +483,33 @@
               </div>
               <p class="sr-only" id="memoryStatus" role="status" aria-live="polite"></p>
             </section>
+
+            <section class="platformer-game" aria-labelledby="platformerTitle">
+              <div class="memory-head platformer-head">
+                <div>
+                  <h3 class="memory-title" id="platformerTitle">Pixel Platformer</h3>
+                  <p class="memory-subtitle">Hop across a new level. Watch out for the roaming bots.</p>
+                </div>
+                <div class="platformer-score" aria-live="polite">SCORE <b id="platformerScore">0</b></div>
+              </div>
+              <div class="platformer-stage" id="platformerStage">
+                <canvas id="platformerCanvas" width="800" height="440" tabindex="0" role="img" aria-label="Pixel platformer. Use left and right arrow keys or A and D to move, and Space or Up to jump."></canvas>
+                <div class="platformer-overlay" id="platformerOverlay">
+                  <p class="overlay-title">PIXEL HOP</p>
+                  <p class="overlay-msg" id="platformerMessage">Jump between the randomized platforms and dodge the bots.</p>
+                  <button type="button" class="btn btn-primary" id="platformerStart">Start Run</button>
+                </div>
+              </div>
+              <div class="platformer-controls" role="group" aria-label="Platformer touch controls">
+                <button type="button" class="btn btn-ghost" data-platformer-control="left" aria-label="Move left">◀</button>
+                <button type="button" class="btn btn-ghost" data-platformer-control="right" aria-label="Move right">▶</button>
+                <button type="button" class="btn btn-primary" data-platformer-control="jump" aria-label="Jump">JUMP ▲</button>
+                <button type="button" class="btn btn-ghost" data-platformer-control="pause" aria-label="Pause or resume">Ⅱ</button>
+              </div>
+              <p class="hint">Move: <kbd>←</kbd> <kbd>→</kbd> / <kbd>A</kbd> <kbd>D</kbd> · Jump: <kbd>↑</kbd> / <kbd>Space</kbd> / <kbd>W</kbd> · <kbd>P</kbd> pauses · Touch controls available.</p>
+              <p class="platformer-credit">Special thanks to Aiden for this game idea.</p>
+              <p class="sr-only" id="platformerStatus" role="status" aria-live="polite"></p>
+            </section>
           </section>
 
           <!-- ============ SETTINGS ============ -->
