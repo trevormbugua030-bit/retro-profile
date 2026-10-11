@@ -622,6 +622,10 @@ function initPlatformer() {
   function addBotsOnPlatform(platform) {
     if (platform.botSpawnChecked) return;
     platform.botSpawnChecked = true;
+    // Keep bots at least one viewport apart. Neighboring platforms can line
+    // up visually, especially on a phone, and otherwise look like one crowded
+    // platform even though each platform only received one bot.
+    if (game.enemies.some((enemy) => enemy.platform && Math.abs(enemy.platform.x - platform.x) < W + 80)) return;
     // Keep bots occasional and slow so new players have room to react.
     if (Math.random() >= .2) return;
     const min = platform.x + 4;
