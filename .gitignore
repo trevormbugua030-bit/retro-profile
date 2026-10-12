@@ -1,5 +1,6 @@
 node_modules/
 package.json.bak
+config.js
 .env
 .env.*
 !.env.example

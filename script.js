@@ -70,7 +70,7 @@ $$("[data-theme-btn]").forEach((btn) => {
 applyTheme(store.get(KEYS.theme) || "retro", false);
 
 /* ---------------- 2. Navigation ---------------- */
-const NAV_SECTIONS = ["home", "profile", "games", "settings"];
+const NAV_SECTIONS = ["home", "profile", "games", "social", "settings"];
 
 function setActiveNav(id) {
   $$("[data-nav]").forEach((link) => {

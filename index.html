@@ -103,6 +103,7 @@
         <a class="side-link" href="#home" data-nav><svg class="ic"><use href="#i-home"></use></svg><span>Home</span></a>
         <a class="side-link" href="#profile" data-nav><svg class="ic"><use href="#i-user"></use></svg><span>Trevor</span></a>
         <a class="side-link" href="#games" data-nav><svg class="ic"><use href="#i-gamepad"></use></svg><span>Games</span></a>
+        <a class="side-link" href="#social" data-nav><svg class="ic"><use href="#i-users"></use></svg><span>Social</span></a>
         <a class="side-link" href="#settings" data-nav><svg class="ic"><use href="#i-gear"></use></svg><span>Settings</span></a>
       </nav>
 
@@ -187,6 +188,7 @@
         <a href="#home" data-nav>Home</a>
         <a href="#profile" data-nav>Trevor</a>
         <a href="#games" data-nav>Games</a>
+        <a href="#social" data-nav>Social</a>
         <a href="#settings" data-nav>Settings</a>
       </nav>
 
@@ -516,6 +518,61 @@
             </section>
           </section>
 
+          <section id="social" class="panel panel-hud social-panel reveal">
+            <header class="panel-head">
+              <h2 class="panel-title"><svg class="ic"><use href="#i-users"></use></svg>Player Network</h2>
+              <span class="panel-kicker" id="socialConnection">backend not configured</span>
+            </header>
+            <div class="social-auth" id="socialAuth">
+              <div class="social-intro">
+                <p class="eyebrow">MULTIPLAYER // CONNECT</p>
+                <h3>Find your people.</h3>
+                <p>Make an account to discover fellow builders, add friends, and chat privately.</p>
+              </div>
+              <form id="authForm" class="social-form">
+                <div class="social-auth-tabs" role="tablist" aria-label="Account action">
+                  <button type="button" class="social-tab is-active" data-auth-mode="signin" role="tab" aria-selected="true">Sign in</button>
+                  <button type="button" class="social-tab" data-auth-mode="signup" role="tab" aria-selected="false">Create account</button>
+                </div>
+                <label class="social-field signup-only" hidden>Username<input name="username" autocomplete="username" minlength="3" maxlength="24" pattern="[a-zA-Z0-9_]+" placeholder="pixelpilot" /></label>
+                <label class="social-field signup-only" hidden>Display name <span>(optional)</span><input name="display_name" maxlength="40" placeholder="Your name" /></label>
+                <label class="social-field">Email<input name="email" type="email" autocomplete="email" maxlength="254" required placeholder="you@example.com" /></label>
+                <label class="social-field">Password<input name="password" type="password" autocomplete="current-password" minlength="10" maxlength="128" required placeholder="At least 10 characters" /></label>
+                <label class="social-terms signup-only" hidden><input name="terms" type="checkbox" /> I accept the <a href="privacy.html" target="_blank" rel="noopener">terms and privacy notice</a>.</label>
+                <button class="btn btn-primary social-submit" type="submit">Sign in <svg class="ic"><use href="#i-arrow"></use></svg></button>
+                <button class="social-link" type="button" id="resetPassword">Forgot password?</button>
+                <p class="social-feedback" id="authFeedback" role="status" aria-live="polite"></p>
+              </form>
+            </div>
+            <div id="socialApp" hidden>
+              <div class="social-toolbar">
+                <p>Connected as <strong id="socialIdentity"></strong></p>
+                <div><button class="btn btn-ghost btn-sm" id="editProfileBtn" type="button">Edit profile</button><button class="btn btn-ghost btn-sm" id="signOutBtn" type="button">Sign out</button></div>
+              </div>
+              <div class="social-tabs" role="tablist" aria-label="Social pages">
+                <button class="social-page-tab is-active" type="button" data-social-page="discover" role="tab" aria-selected="true">Discover</button>
+                <button class="social-page-tab" type="button" data-social-page="friends" role="tab" aria-selected="false">Friends <span id="friendBadge" class="social-badge" hidden></span></button>
+                <button class="social-page-tab" type="button" data-social-page="messages" role="tab" aria-selected="false">Messages <span id="messageBadge" class="social-badge" hidden></span></button>
+                <button class="social-page-tab" type="button" data-social-page="myprofile" role="tab" aria-selected="false">My profile</button>
+              </div>
+              <div class="social-view" id="discoverView" data-social-view="discover">
+                <label class="social-search"><svg class="ic"><use href="#i-search"></use></svg><input id="userSearch" type="search" maxlength="80" placeholder="Search usernames and display names" autocomplete="off" /></label>
+                <div class="social-card-grid" id="directoryList" aria-live="polite"></div>
+              </div>
+              <div class="social-view" id="friendsView" data-social-view="friends" hidden>
+                <div class="social-columns"><section><h3>Friend requests <span class="panel-kicker">INCOMING</span></h3><div id="incomingRequests" class="social-list"></div></section><section><h3>Sent requests <span class="panel-kicker">OUTGOING</span></h3><div id="outgoingRequests" class="social-list"></div></section></div>
+                <section class="social-friends-section"><h3>Your friends <span class="panel-kicker" id="friendCount"></span></h3><div id="friendList" class="social-card-grid"></div></section>
+              </div>
+              <div class="social-view" id="messagesView" data-social-view="messages" hidden>
+                <div class="chat-layout"><aside class="chat-sidebar"><label class="social-search"><svg class="ic"><use href="#i-search"></use></svg><input id="chatSearch" type="search" maxlength="80" placeholder="Find a friend" /></label><div id="conversationList" class="conversation-list"></div></aside><section class="chat-main" aria-label="Conversation"><header class="chat-header" id="chatHeader"><span>Select a conversation</span><span class="connection-dot" id="realtimeDot" title="Connecting"></span></header><div id="chatMessages" class="chat-messages" aria-live="polite"><div class="social-empty">Choose a friend to start a private conversation.</div></div><form id="messageForm" class="message-form"><textarea id="messageInput" rows="1" maxlength="4000" placeholder="Write a message…" aria-label="Message" disabled></textarea><button class="btn btn-primary" type="submit" disabled id="sendMessageBtn">Send</button></form></section></div>
+              </div>
+              <div class="social-view" id="myprofileView" data-social-view="myprofile" hidden><div id="myProfileCard"></div></div>
+              <p class="social-feedback" id="socialFeedback" role="status" aria-live="polite"></p>
+            </div>
+            <dialog class="social-dialog" id="profileDialog"><form id="profileForm" method="dialog"><header><h2>Edit your profile</h2><button class="social-dialog-close" type="button" aria-label="Close">×</button></header><label class="social-field">Display name<input name="display_name" maxlength="40" /></label><label class="social-field">Bio<textarea name="bio" maxlength="240" rows="3"></textarea></label><label class="social-field">Avatar image<input name="avatar" type="file" accept="image/png,image/jpeg,image/webp" /><span>PNG, JPEG, or WebP up to 2 MB</span></label><button class="btn btn-primary" type="submit">Save profile</button><p class="social-feedback" id="profileFeedback" role="status"></p></form></dialog>
+            <dialog class="social-dialog" id="publicProfileDialog"><div id="publicProfileContent"></div></dialog>
+          </section>
+
           <!-- ============ SETTINGS ============ -->
           <section id="settings" class="panel panel-hud reveal">
             <header class="panel-head">
@@ -721,6 +778,8 @@
       showError('The page loaded, but a quick self-check failed: ' + (e && e.message ? String(e.message) : String(e)));
     }
   })();
-</script>    <script src="script.js"></script>
+  </script>    <script src="script.js"></script>
+  <script src="config.js"></script>
+  <script type="module" src="social.js"></script>
 </body>
 </html>
